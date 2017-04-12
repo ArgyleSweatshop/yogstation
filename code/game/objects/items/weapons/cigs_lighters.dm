@@ -195,6 +195,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.unEquip(src, 1)
 		qdel(src)
 		return
+	if(reagents.get_reagent_amount("blackpowder")) // blackpowder explodes when exposed to fire
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(round(reagents.get_reagent_amount("blackpowder"), 1), get_turf(src), 0, 0)
+		e.start()
+		if(ismob(loc))
+			var/mob/M = loc
+			M.unEquip(src, 1)
+		qdel(src)
+		return
 	if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
